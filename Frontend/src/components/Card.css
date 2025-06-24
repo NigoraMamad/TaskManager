@@ -1,0 +1,50 @@
+.card {
+  background: #fff;
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.card h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.card p {
+  font-size: 14px;
+  color: #555;
+  margin: 6px 0;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-size: 12px;
+}
+
+.priority {
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.priority.low {
+  background-color: #e6f4ea;
+  color: #137333;
+}
+
+.priority.medium {
+  background-color: #fef7e0;
+  color: #a9791c;
+}
+
+.priority.top {
+  background-color: #fce8e6;
+  color: #c5221f;
+}
+
+.due-date {
+  color: #888;
+}

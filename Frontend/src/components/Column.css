@@ -1,0 +1,37 @@
+.column {
+  width: 250px;
+  background-color: #f3f3f3;
+  padding: 16px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.column-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.column h2 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.add-btn {
+  background-color: #eee;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.add-link {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #5f5fc4;
+  background: none;
+  border: none;
+  cursor: pointer;
+}

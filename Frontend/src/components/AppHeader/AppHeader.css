@@ -3,8 +3,8 @@
 }
 
 header {
-    padding: 22px calc(5.63vw - 1.12px);
     width: 100%;
+    padding: 22px calc(5.63vw - 1.12px);
     height: 64px;
     display: flex;
     justify-content: space-between;

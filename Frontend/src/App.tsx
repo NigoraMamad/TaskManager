@@ -1,20 +1,22 @@
 import './App.css'
 import AppHeader from './components/AppHeader/AppHeader'
-import { Board } from './components/Board'
+import Board from './components/Board/Board'
 import UserInfo from './components/UserInfo/UserInfo'
- 
+
 function App() {
 
   return (
     <>
       <AppHeader />
-      <UserInfo/>
-          <div>
-      <div style={{ padding: '16px', borderBottom: '1px solid #ccc' }}>
-        <h1 style={{ fontSize: '24px', color: '#5f5fc4' }}>Board view</h1>
+      <UserInfo />
+      <div style={{ padding: '22px calc(5.63vw - 1.12px)' }}>
+        <div style={{ padding: '16px', borderBottom: '1px solid #ccc', display: 'flex', gap: '20px' }}>
+          <h2 style={{ fontSize: '24px', color: '#222', cursor: 'pointer', fontFamily: 'Inter, sans-serif' }}>Table view</h2>
+          <h1 style={{ fontSize: '24px', color: '#5f5fc4', cursor: 'pointer', fontFamily: 'Inter, sans-serif' }}>Board view</h1>
+
+        </div>
+        <Board />
       </div>
-      <Board />
-    </div>
     </>
   )
 }

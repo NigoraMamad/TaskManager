@@ -1,7 +1,6 @@
-import React from 'react';
-import { Column } from './Column';
-import { type ColumnType } from '../types';
-import '../Board.css';
+import { Column } from '../Column/Column';
+import { type ColumnType } from '../../types';
+import './Board.css';
 
 const boardData: ColumnType[] = [
   {
@@ -64,7 +63,7 @@ const boardData: ColumnType[] = [
   },
 ];
 
-export const Board: React.FC = () => {
+const Board: React.FC = () => {
   return (
     <div className="board">
       {boardData.map(col => (
@@ -73,3 +72,5 @@ export const Board: React.FC = () => {
     </div>
   );
 };
+
+export default Board;

@@ -1,0 +1,23 @@
+:root {
+    --darkBlack: #202022;
+}
+
+header {
+    padding: 20px 80px;
+    width: 100%;
+    height: 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--darkBlack);
+
+
+border-bottom: 1px solid #FFFFFF14;
+
+}
+
+header button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}

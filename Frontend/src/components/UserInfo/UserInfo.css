@@ -1,0 +1,44 @@
+:root {
+    --darkBlack: #202022;
+    --white: #FFFFFF;
+    --lightWhite: #FFFFFF99;
+}
+
+.userinfowrapper {
+    padding: 20px 80px;
+    width: 100%;
+    height: 109px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--darkBlack);
+}
+
+.userinfowrapper h1 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 130%;
+    color: var(--white);
+}
+
+.userinfowrapper span {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 160%;
+    color: var(--lightWhite);
+}
+
+.userinfowrapper .userphone h2 {
+    font-family: 'Inter', sans-serif;
+    font-size: 14.48px;
+    line-height: 100%;
+    color: var(--lightWhite);
+}
+
+.userinfowrapper .userphone span {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 14.48px;
+    line-height: 100%;
+}

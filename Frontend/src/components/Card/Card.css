@@ -4,6 +4,7 @@
     padding: 12px;
     margin-bottom: 12px;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
 }
 
 .card h3 {

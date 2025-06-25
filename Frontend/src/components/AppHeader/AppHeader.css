@@ -14,10 +14,16 @@ header {
 
 }
 
-header button {
-    border: none;
-    background-color: transparent;
+header .logo {
     cursor: pointer;
+    width: 100px;
+    height: 19px;
+}
+
+header .login {
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
 }
 
 .burger {
@@ -33,10 +39,6 @@ header button {
         display: block;
     }
 }
-
-
-
-
 
 /*burger menu styles start*/
 .burger-checkbox {

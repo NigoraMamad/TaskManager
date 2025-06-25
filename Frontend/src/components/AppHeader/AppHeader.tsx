@@ -1,14 +1,13 @@
 import './AppHeader.css';
-import logo from '/logo.svg';
-import loginbtn from '/loginbtn.svg';
+import AppImage from '../UI/AppImage/AppImage';
+import AppBurgerMenu from '../UI/AppBurgerMenu/AppBurgerMenu';
 
-const AppHeader = () => {
+const AppHeader: React.FC = () => {
     return (
         <header>
-            <button><img src={logo} alt="logo" /></button>
-            <button className='login'><img src={loginbtn} alt="loginbtn" /></button>
-            <input type="checkbox" id="burger-checkbox" className="burger-checkbox" />
-            <label className="burger" htmlFor="burger-checkbox"></label>
+            <AppImage src="/logo.svg" alt="logo" className='logo' />
+            <AppImage src='/loginbtn.svg' alt='login-button' className='login'/>
+            <AppBurgerMenu />
         </header>
     );
 };

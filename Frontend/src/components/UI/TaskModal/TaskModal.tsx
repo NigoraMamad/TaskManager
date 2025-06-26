@@ -5,6 +5,7 @@ import './TaskModal.css';
 interface Props {
   onClose: () => void;
   onSave: (card: CardItem) => void;
+  onDelete?: (id: string)=> void;
   card?: CardItem; // если редактируем
 }
 

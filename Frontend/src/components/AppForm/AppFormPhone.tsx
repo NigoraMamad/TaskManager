@@ -1,16 +1,13 @@
 import AppFormTextField from "../UI/AppFormTextField/AppFormTextField";
+import React from "react";
 
-type PhoneProps = {
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-};
+type PhoneProps = React.ComponentProps<typeof AppFormTextField>;
 
-const Phone = ({ value, onChange }: PhoneProps) => (
+const Phone: React.FC<PhoneProps> = (props) => (
   <AppFormTextField
     label="Phone Number"
     fullWidth
-    value={value}
-    onChange={onChange}
+    {...props}
   />
 );
 

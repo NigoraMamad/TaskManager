@@ -30,7 +30,7 @@ h3{
   margin-bottom: 10px;
 }
 
-p{
+.login-text{
   font-size: 14px;
 }
 
@@ -66,3 +66,8 @@ a{
   margin-bottom: 6px !important;
 }
 
+.error-message {
+  color: #d32f73;
+  font-size: 12px;
+  margin: 0;
+}

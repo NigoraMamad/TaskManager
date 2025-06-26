@@ -1,16 +1,12 @@
 import AppFormTextField from "../UI/AppFormTextField/AppFormTextField";
-type FullNameProps = {
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
+type FullNameProps = React.ComponentProps<typeof AppFormTextField>
 
-const FullName = ({value, onChange}: FullNameProps) => (
+const FullName: React.FC<FullNameProps> = (props) => (
   <AppFormTextField
     label="Full Name"
     id="reddit-fullname"
     fullWidth
-    value={value}
-    onChange={onChange}
+    {...props} 
   />
 );
 

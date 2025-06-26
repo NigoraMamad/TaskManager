@@ -1,12 +1,8 @@
 import AppFormTextField from '../UI/AppFormTextField/AppFormTextField';
 
-type LogPasswordProps = {
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  error?: boolean;
-  helperText?: string;
-}
-const LogPassword = ({value, onChange, error, helperText}: LogPasswordProps) => {
+type PasswordProps = React.ComponentProps<typeof AppFormTextField>;
+
+const AppFormPassword: React.FC<PasswordProps> = (props) => (
   // const [password, setPassword] = useState('');
   // const [error, setError] = useState('');
 
@@ -20,19 +16,12 @@ const LogPassword = ({value, onChange, error, helperText}: LogPasswordProps) => 
   //     setError('');
   //   }
   // };
-
-  return (   
+ 
       <AppFormTextField
-        label="Password"
         type="password"
-        id="reddit-password"
         fullWidth
-        value={value}
-        onChange={onChange}
-        error={error}
-        helperText={helperText}
+        {...props} 
       />   
-  );
-};
+);
 
-export default LogPassword;
+export default AppFormPassword;

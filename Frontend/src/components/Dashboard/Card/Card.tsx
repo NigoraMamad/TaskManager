@@ -1,5 +1,5 @@
 import React from 'react';
-import { type CardItem } from '../../types';
+import { type CardItem } from '../../../types';
 import './Card.css';
 
 interface Props {

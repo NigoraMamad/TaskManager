@@ -1,6 +1,6 @@
 import AppHeader from "../../components/AppHeader/AppHeader";
 import UserInfo from "../../components/UserInfo/UserInfo";
-import Board from "../../components/Board/Board";
+import Board from "../../components/Dashboard/Board/Board";
 
 const MainPage = () => {
     return (<>

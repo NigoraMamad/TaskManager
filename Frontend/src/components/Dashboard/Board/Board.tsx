@@ -1,7 +1,11 @@
+// import { Column } from '../Column/Column';
+// import { type ColumnType} from '../../types';
+// import { type CardItem } from '../../types';
+// import {TaskModal} from '../UI/TaskModal/TaskModal';
 import { Column } from '../Column/Column';
-import { type ColumnType} from '../../types';
-import { type CardItem } from '../../types';
-import {TaskModal} from '../UI/TaskModal/TaskModal';
+import { type ColumnType } from '../../../types';
+import {type CardItem } from '../../../types';
+import { TaskModal } from '../../UI/TaskModal/TaskModal';
 import './Board.css';
 import { useState } from 'react';
 

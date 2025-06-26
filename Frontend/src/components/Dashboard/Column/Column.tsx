@@ -1,5 +1,5 @@
 import React from 'react';
-import { type CardItem } from '../../types';
+import { type CardItem } from '../../../types';
 import { Card } from '../Card/Card';
 import './Column.css';
 

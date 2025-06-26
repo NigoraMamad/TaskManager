@@ -48,6 +48,7 @@ export const TaskModal: React.FC<Props> = ({ onClose, onSave, card }) => {
         <div className="modal-content">
           <label>Status</label>
           <select value={status} onChange={e => setStatus(e.target.value as Status)}>
+            <option value="Empty">Empty</option>
             <option value="To do">To Do</option>
             <option value="In progress">In Progress</option>
             <option value="Review">Review</option>

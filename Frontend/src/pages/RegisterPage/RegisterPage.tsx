@@ -29,8 +29,9 @@ const RegistrationPage: React.FC = () => {
       const passwordError = formState.errors['password']?.message;
       const confirmPasswordError = formState.errors['confirmPassword']?.message;
     const onSubmit = (data: RegistrationPropsInput) => {
+      localStorage.setItem('registration', JSON.stringify(data));
       console.log('Registration successful!', data); 
-      navigate('/', { replace: true }); 
+      navigate('/login', { replace: true }); 
     }
 
   return (
@@ -61,7 +62,7 @@ const RegistrationPage: React.FC = () => {
       <div className="login-text">
         Already have an account? 
         <AppLink href="/login" className="login-link">
-          Log In
+          Sign up
         </AppLink>
       </div>
     </div>

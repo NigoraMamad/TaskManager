@@ -6,6 +6,7 @@ type PhoneProps = React.ComponentProps<typeof AppFormTextField>;
 const Phone: React.FC<PhoneProps> = (props) => (
   <AppFormTextField
     label="Phone Number"
+    type="tel"
     fullWidth
     {...props}
   />

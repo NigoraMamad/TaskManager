@@ -10,6 +10,12 @@ import { useForm } from 'react-hook-form';
 import { phoneValidation, passwordValidation } from '../../components/AppForm/Validation/AuthValidation';
 import  ErrorMessage  from '../../components/AppForm/Validation/ErrorMessage';
 import AppFormPassword from '../../components/AppForm/AppFormPassword';
+import { toast } from 'react-toastify';
+
+const mockUsers = [
+  { phone: '1234567890', password: '123456789' },
+  { phone: '9876543210', password: 'qwerty123' },
+];
 
 type LoginPropsInput = {
   phone: string;
@@ -23,10 +29,20 @@ const LoginPage: React.FC = () => {
   });
   const phoneError = formState.errors['phone']?.message;
   const passwordError = formState.errors['password']?.message;
+
+
   const onSubmit = (data: LoginPropsInput) => {
-    console.log('Login successful!', data);
-    navigate('/', { replace: true });
-  }
+    const user = mockUsers.find(
+      (u) => u.phone === data.phone && u.password === data.password
+    );
+
+    if (user) {
+      toast.success('Login successful!');
+      navigate('/', { replace: true });
+    } else {
+      toast.error('Invalid phone or password');
+    }
+  };
   
     return (
     <div className="registration-wrapper">

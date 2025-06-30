@@ -1,0 +1,158 @@
+package com.epam.learning.utils;
+
+import com.epam.learning.dto.SignUpDTO;
+import com.epam.learning.entitiy.Role;
+import com.epam.learning.entitiy.enums.RoleName;
+import com.epam.learning.repository.RoleRepository;
+import com.epam.learning.service.MailService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
+
+import javax.crypto.SecretKey;
+import java.util.*;
+import java.util.stream.Collectors;
+
+@Component
+@RequiredArgsConstructor
+public class JwtUtil {
+
+    private final MailService mailService;
+    private final ObjectMapper jacksonObjectMapper;
+    @Value("${JWT_SECRET_KEY}")
+    private String secretKey;
+    Random random = new Random();
+    private final RoleRepository roleRepo;
+
+    public String genToken(UserDetails userDetails) {
+        String roles = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(","));
+        System.out.println(roles);
+        return "Bearer " + Jwts.builder()
+                .subject(userDetails.getUsername())
+                .claim("authorities", roles)
+                .issuedAt(new Date())
+                .issuer("audio.book")
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))
+                .signWith(genKey())
+                .compact();
+    }
+
+    private SecretKey genKey() {
+        byte[] key = Decoders.BASE64.decode(secretKey);
+        return Keys.hmacShaKeyFor(key);
+    }
+
+    public String genRefreshToken(UserDetails userDetails) {
+        String roles = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(","));
+        System.out.println(roles);
+        return "Bearer " + Jwts.builder()
+                .subject(userDetails.getUsername())
+                .claim("authorities", roleRepo.findAll())
+                .issuedAt(new Date())
+                .issuer("homework.io")
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 14))
+                .signWith(genKey())
+                .compact();
+    }
+
+    public boolean isValid(String token) {
+        try {
+            getClaims(token);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    private Claims getClaims(String token) {
+        return Jwts.parser()
+                .verifyWith(genKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+    }
+
+    public String getUsername(String token) {
+        Claims claims = getClaims(token);
+        String subject = claims.getSubject();
+        return getClaims(token).getSubject();
+    }
+
+    public List<GrantedAuthority> getAuthorities(String token) {
+        String authorities = getClaims(token).get("authorities", String.class);
+        return Arrays.stream(authorities.split(",")).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+    }
+
+    public String genVerificationCodeToken(SignUpDTO user) {
+        Integer otp = genVerificationCode();
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("phone_number", user.getPhoneNumber());
+        claims.put("password", user.getPassword());
+
+        mailService.sendConfirmationCode(user.getPhoneNumber(), otp.toString());
+        return genSignUpConfirmationToken(claims, user.getPhoneNumber(), otp.toString());
+    }
+
+    public String genSignUpConfirmationToken(Map<String, Object> user, String email, String otp) {
+//        String roles = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(","));
+
+        for (Role role : roleRepo.findAll()) {
+
+        }
+
+
+        return "Confirmation " + Jwts.builder()
+                .claim("details", user)
+                .claims(Map.of("otp", otp))
+                .claim("authorities", List.of(RoleName.ROLE_USER))
+                .subject(email)
+                .issuedAt(new Date(System.currentTimeMillis()))
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
+                .signWith(genKey())
+                .compact();
+    }
+
+    private Integer genVerificationCode() {
+        return random.nextInt(101010, 989898);
+    }
+
+    public boolean checkVerificationCodeFromDto(String verificationCode, String token) {
+        System.out.println(token);
+        Claims claims = getClaims(token);
+        String otp = claims.get("otp", String.class);
+        System.out.println(otp);
+        return verificationCode.equals(otp);
+    }
+
+    public SignUpDTO getDtoFromToken(String token) {
+        Claims claims = getClaims(token);
+        Map<String, Object> details = claims.get("details", Map.class);
+        System.out.println(details);
+        return jacksonObjectMapper.convertValue(details, SignUpDTO.class);
+    }
+
+    public String generateCodeToken(String email) {
+        Integer verificationCode = genVerificationCode();
+        mailService.sendConfirmationCode(email, verificationCode.toString());
+        return "Confirmation " + Jwts.builder()
+                .subject(email)
+                .claim("confirmationCode", verificationCode.toString())
+                .issuedAt(new Date(System.currentTimeMillis()))
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 10))
+                .signWith(genKey())
+                .compact();
+    }
+
+    public boolean checkVerification(String verificationCode, String token) {
+        Claims claims = getClaims(token);
+        return verificationCode.equals(claims.get("confirmationCode", String.class));
+    }
+}

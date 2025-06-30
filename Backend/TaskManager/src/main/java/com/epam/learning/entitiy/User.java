@@ -26,7 +26,7 @@ public class User implements UserDetails {
     @Column(nullable = false, length = 100)
     private String fullName;
 
-    @Column(nullable = false, length = 15)
+    @Column(nullable = false, length = 50)
     private String phoneNumber;
 
     @Column(nullable = false)

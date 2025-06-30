@@ -79,7 +79,7 @@ const Board: React.FC = () => {
   const [columns, setColumns] = useState<ColumnType[]>(boardData);
   const [showModal, setShowModal] = useState(false);
   const [activeCard, setActiveCard] = useState<CardItem | null>(null);
-  const [activeColumnId, setActiveColumnId] = useState<string | null>(null);
+  const [/*activeColumnId*/, setActiveColumnId] = useState<string | null>(null);
 
   const handleAddCard = (columnId: string) => {
     setActiveColumnId(columnId);

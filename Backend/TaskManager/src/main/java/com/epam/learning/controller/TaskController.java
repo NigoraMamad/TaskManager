@@ -2,8 +2,7 @@ package com.epam.learning.controller;
 
 import com.epam.learning.dto.TaskDto;
 import com.epam.learning.service.TaskService;
-//import io.swagger.annotations.Api;
-//import io.swagger.annotations.ApiOperation;
+
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

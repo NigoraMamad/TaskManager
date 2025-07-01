@@ -1,7 +1,7 @@
 package com.epam.learning.entity;
 
-import com.epam.learning.enums.Priority;
-import com.epam.learning.enums.Status;
+import com.epam.learning.entitiy.enums.Priority;
+import com.epam.learning.entitiy.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

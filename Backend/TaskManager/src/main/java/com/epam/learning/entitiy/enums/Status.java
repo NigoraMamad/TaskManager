@@ -1,4 +1,4 @@
-package com.epam.learning.enums;
+package com.epam.learning.entitiy.enums;
 
 public enum Status {
 

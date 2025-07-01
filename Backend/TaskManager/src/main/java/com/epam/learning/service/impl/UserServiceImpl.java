@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -32,9 +33,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User saveUserFromDto(SignUpDTO dto) {
         return userRepo.save(User.builder()
+                        .fullName(dto.getFullName())
                 .phoneNumber(dto.getPhoneNumber())
                 .password(passwordEncoder.encode(dto.getPassword()))
                 .roles(new ArrayList<>(List.of(roleServiceImpl.findByName(RoleName.ROLE_USER))))
+                        .createdAt(Instant.now())
                 .build());
     }
 

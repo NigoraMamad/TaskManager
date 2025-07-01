@@ -10,10 +10,10 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SignUpDTO {
-
+    @NotBlank(message = "Full name cannot be blank")
+    private String fullName;
     @NotBlank(message = "Phone number cannot be blank")
     private String phoneNumber;
     @NotBlank(message = "Password cannot be blank")
     private String password;
-    private String verificationCode;
 }

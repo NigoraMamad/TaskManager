@@ -5,11 +5,11 @@ import './TaskModal.css';
 interface Props {
   onClose: () => void;
   onSave: (card: CardItem) => void;
-  onDelete?: (id: string)=> void;
-  card?: CardItem; // если редактируем
+  onDelete?: (id: string) => void;
+  card?: CardItem; // редактируемая карточка (если есть)
 }
 
-export const TaskModal: React.FC<Props> = ({ onClose, onSave, card }) => {
+export const TaskModal: React.FC<Props> = ({ onClose, onSave, onDelete, card }) => {
   const [title, setTitle] = useState(card?.title || '');
   const [status, setStatus] = useState<Status>(card?.status || 'To do');
   const [priority, setPriority] = useState<Priority>(card?.priority || 'Low');
@@ -31,6 +31,12 @@ export const TaskModal: React.FC<Props> = ({ onClose, onSave, card }) => {
     };
 
     onSave(newCard);
+  };
+
+  const handleDelete = () => {
+    if (card?.id && onDelete) {
+      onDelete(card.id);
+    }
   };
 
   return (
@@ -78,7 +84,9 @@ export const TaskModal: React.FC<Props> = ({ onClose, onSave, card }) => {
         </div>
 
         <div className="modal-footer">
-          <button className="delete-btn">🗑 Delete</button>
+          {card && onDelete && (
+            <button className="delete-btn" onClick={handleDelete}>🗑 Delete</button>
+          )}
           <button className="save-btn" onClick={handleSave}>Save</button>
         </div>
       </div>

@@ -1,0 +1,61 @@
+.table-view {
+  padding: 16px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  font-family: Inter, sans-serif;
+}
+
+.task-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.task-table th,
+.task-table td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+.task-table th {
+  background-color: #f9f9f9;
+  color: #888;
+  font-weight: 500;
+}
+
+.tag {
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  color: white;
+}
+
+.tag.low { background-color: #8bc34a; }
+.tag.medium { background-color: #ff9800; }
+.tag.top { background-color: #f44336; }
+
+.status-tag {
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  background-color: #e0e0e0;
+  color: #333;
+  text-transform: capitalize;
+}
+
+.status-tag.to-do { background-color: #2196f3; color: white; }
+.status-tag.in-progress { background-color: #ffeb3b; color: #000; }
+.status-tag.review { background-color: #9c27b0; color: white; }
+.status-tag.done { background-color: #4caf50; color: white; }
+
+.add-link {
+  margin-top: 12px;
+  display: inline-block;
+  color: #5f5fc4;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}

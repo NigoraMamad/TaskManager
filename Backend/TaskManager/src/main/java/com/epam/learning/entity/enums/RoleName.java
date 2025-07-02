@@ -1,4 +1,4 @@
-package com.epam.learning.entitiy.enums;
+package com.epam.learning.entity.enums;
 
 public enum RoleName {
 

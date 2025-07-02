@@ -2,10 +2,9 @@ package com.epam.learning.service;
 
 import com.epam.learning.dto.SignUpDTO;
 import com.epam.learning.dto.UserDetailsDTO;
-import com.epam.learning.entitiy.User;
+import com.epam.learning.entity.User;
 import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
 

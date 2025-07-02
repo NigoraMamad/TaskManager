@@ -2,20 +2,16 @@ package com.epam.learning.service.impl;
 
 import com.epam.learning.dto.SignUpDTO;
 import com.epam.learning.dto.UserDetailsDTO;
-import com.epam.learning.entitiy.User;
-import com.epam.learning.entitiy.enums.RoleName;
+import com.epam.learning.entity.User;
+import com.epam.learning.entity.enums.RoleName;
 import com.epam.learning.repository.UserRepository;
 import com.epam.learning.service.UserService;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.Instant;
 import java.util.ArrayList;

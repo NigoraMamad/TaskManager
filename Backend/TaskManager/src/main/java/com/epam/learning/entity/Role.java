@@ -1,6 +1,6 @@
-package com.epam.learning.entitiy;
+package com.epam.learning.entity;
 
-import com.epam.learning.entitiy.enums.RoleName;
+import com.epam.learning.entity.enums.RoleName;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 

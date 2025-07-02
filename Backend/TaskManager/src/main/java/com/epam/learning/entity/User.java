@@ -1,4 +1,4 @@
-package com.epam.learning.entitiy;
+package com.epam.learning.entity;
 
 
 import lombok.*;

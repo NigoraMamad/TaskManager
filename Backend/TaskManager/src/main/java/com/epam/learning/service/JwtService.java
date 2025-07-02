@@ -3,7 +3,7 @@ package com.epam.learning.service;
 import com.epam.learning.dto.LoginDTO;
 import com.epam.learning.dto.SignUpDTO;
 import com.epam.learning.dto.TokenDTO;
-import com.epam.learning.entitiy.User;
+import com.epam.learning.entity.User;
 import com.epam.learning.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

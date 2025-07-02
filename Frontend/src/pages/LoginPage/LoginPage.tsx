@@ -12,13 +12,9 @@ import  ErrorMessage  from '../../components/AppForm/Validation/ErrorMessage';
 import AppFormPassword from '../../components/AppForm/AppFormPassword';
 import { toast } from 'react-toastify';
 
-const mockUsers = [
-  { phone: '1234567890', password: '123456789' },
-  { phone: '9876543210', password: 'qwerty123' },
-];
 
 type LoginPropsInput = {
-  phone: string;
+  phoneNumber: string;
   password: string;
  };
 
@@ -27,22 +23,35 @@ const LoginPage: React.FC = () => {
   const {register, handleSubmit, formState} = useForm<LoginPropsInput>({
     mode: 'onChange',
   });
-  const phoneError = formState.errors['phone']?.message;
+  const phoneError = formState.errors['phoneNumber']?.message;
   const passwordError = formState.errors['password']?.message;
 
 
-  const onSubmit = (data: LoginPropsInput) => {
-    const user = mockUsers.find(
-      (u) => u.phone === data.phone && u.password === data.password
-    );
+  const onSubmit = async (data: LoginPropsInput) => {
+  try {
+    const response = await fetch('http://localhost:8080/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        phoneNumber: data.phoneNumber, // ВАЖНО: поле называется phoneNumber!
+        password: data.password,
+      }),
+    });
 
-    if (user) {
+    if (response.ok) {
+      const tokens = await response.json();
+      localStorage.setItem('accessToken', tokens.accessToken);
+      localStorage.setItem('refreshToken', tokens.refreshToken);
       toast.success('Login successful!');
-      navigate('/', { replace: true });
+      navigate('/');
     } else {
-      toast.error('Invalid phone or password');
+      const error = await response.json();
+      toast.error(error.message || 'Login failed');
     }
-  };
+  } catch (e) {
+    toast.error('Server error');
+  }
+};
   
     return (
     <div className="registration-wrapper">
@@ -52,7 +61,7 @@ const LoginPage: React.FC = () => {
       <AppHeading level={1} children="Log in to your account" />
       <AppHeading level={3} children="Welcome back! Please enter your details." />
       <form className="input-form" onSubmit={handleSubmit(onSubmit)}>
-        <Phone {...register ('phone', phoneValidation)} />
+        <Phone {...register ('phoneNumber', phoneValidation)} />
         <ErrorMessage error={phoneError}/>
         <AppFormPassword
         label="Password"

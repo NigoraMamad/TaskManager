@@ -11,7 +11,7 @@ function App() {
 
   return (
   <BrowserRouter>
-        <ToastContainer position="bottom-right" autoClose={3000} aria-label={undefined} />
+        <ToastContainer position="bottom-right" autoClose={5000} aria-label={undefined} />
     <Routes>
       <Route path="/" element={<MainPage />} />
       <Route path="/register" element={<RegisterPage />} />

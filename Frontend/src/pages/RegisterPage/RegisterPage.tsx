@@ -7,66 +7,100 @@ import AppButton from '../../components/UI/AppButton/AppButton';
 import AppImage from '../../components/UI/AppImage/AppImage';
 import AppLink from '../../components/UI/AppLink/AppLink';
 import { useNavigate } from 'react-router-dom';
-import { confirmPasswordValidation, fullNameValidation, passwordValidation, phoneValidation } from '../../components/AppForm/Validation/AuthValidation';
 import { useForm } from 'react-hook-form';
 import ErrorMessage from '../../components/AppForm/Validation/ErrorMessage';
 import AppFormPassword from '../../components/AppForm/AppFormPassword';
+import {
+  fullNameValidation,
+  phoneValidation,
+  passwordValidation,
+  confirmPasswordValidation,
+} from '../../components/AppForm/Validation/AuthValidation';
+import { toast } from 'react-toastify';
 
 type RegistrationPropsInput = {
   fullName: string;
-  phone: string;
-  password: string; 
+  phoneNumber: string;
+  password: string;
   confirmPassword: string;
 };
 
 const RegistrationPage: React.FC = () => {
-    const {register, handleSubmit, formState} = useForm<RegistrationPropsInput>({
-      mode: 'onChange',
+  const { register, handleSubmit, formState, watch } = useForm<RegistrationPropsInput>({
+    mode: 'onChange',
+  });
+  const navigate = useNavigate();
+  const phoneError = formState.errors['phoneNumber']?.message;
+  const fullNameError = formState.errors['fullName']?.message;
+  const passwordError = formState.errors['password']?.message;
+  const confirmPasswordError = formState.errors['confirmPassword']?.message;
+
+  const onSubmit = async (data: RegistrationPropsInput) => {
+  try {
+    const cleanPhone = data.phoneNumber.replace(/\D/g, ''); // оставляет только цифры
+    const response = await fetch('http://localhost:8080/api/auth/sign-up', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        fullName: data.fullName,
+        phoneNumber: cleanPhone, // ВАЖНО: поле называется phoneNumber!
+        password: data.password,
+      }),
     });
-    const navigate = useNavigate();
-      const phoneError = formState.errors['phone']?.message;
-      const fullNameError = formState.errors['fullName']?.message;
-      const passwordError = formState.errors['password']?.message;
-      const confirmPasswordError = formState.errors['confirmPassword']?.message;
-    const onSubmit = (data: RegistrationPropsInput) => {
-      localStorage.setItem('registration', JSON.stringify(data));
-      console.log('Registration successful!', data); 
-      navigate('/login', { replace: true }); 
+
+    if (response.ok) {
+      toast.success('New account successfully created');
+      navigate('/login', { replace: true });
+    } else {
+      const error = await response.json();
+      console.log(cleanPhone.length);
+      toast.error(error.message || 'Registration failed');
     }
+  } catch (e) {
+    toast.error('Server error');
+  }
+};
 
   return (
     <div className="registration-wrapper">
       <AppLink href="/" className="logo-link">
-        <AppImage src="/regLogo.svg" alt="logo" className='logo' />
+        <AppImage src="/regLogo.svg" alt="logo" className="logo" />
       </AppLink>
-      <AppHeading level={1} children="Create an account" />
-      <AppHeading level={3} children="Start your planning today" />
+      <AppHeading level={1}>Create an account</AppHeading>
+      <AppHeading level={3}>Start your planning today</AppHeading>
       <form className="input-form" onSubmit={handleSubmit(onSubmit)}>
-        <FullName {...register('fullName', fullNameValidation)}/>
-        <ErrorMessage error={fullNameError}/>
-        <Phone {...register ('phone', phoneValidation)} />
-        <ErrorMessage error={phoneError}/>
+        <FullName {...register('fullName', fullNameValidation)}
+          error={!!fullNameError} />
+        <ErrorMessage error={fullNameError} />
+        <Phone {...register('phoneNumber', phoneValidation)}
+          error={!!phoneError} />
+        <ErrorMessage error={phoneError} />
         <AppFormPassword
-        label="Create Password"
-        {...register('password', passwordValidation)}/>
-        <ErrorMessage error={passwordError}/>
+          label="Create Password"
+          {...register('password', passwordValidation)}
+          error={!!passwordError}
+        />
+        <ErrorMessage error={passwordError} />
         <AppFormPassword
-        label="Confirm Password"
-        {...register('confirmPassword', confirmPasswordValidation)}/>
-        <ErrorMessage error={confirmPasswordError}/> 
-        <AppButton className="getStarted" type="submit" children={
-        <AppHeading level={3} className="button-text" children="Log In"/>
-        }/>
+          label="Confirm Password"
+          {...register('confirmPassword', confirmPasswordValidation(watch))}
+          error={!!confirmPasswordError}
+        />
+        <ErrorMessage error={confirmPasswordError} />
+        <AppButton className="getStarted" type="submit">
+          <AppHeading level={3} className="button-text">
+            Sign Up
+          </AppHeading>
+        </AppButton>
       </form>
-
       <div className="login-text">
-        Already have an account? 
+        Already have an account?
         <AppLink href="/login" className="login-link">
           Sign up
         </AppLink>
       </div>
     </div>
-  )
+  );
 };
 
 export default RegistrationPage;

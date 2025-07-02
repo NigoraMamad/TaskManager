@@ -39,7 +39,11 @@ const RedditTextField = styled((props: TextFieldProps) => (
   },
   '& label.Mui-focused': {
     color: '#5847F1', // цвет label при фокусе
+    borderColor: '#d32f2f', 
   },
+  '& .MuiFilledInput-root.Mui-error': {
+  borderColor: '#d32f2f', // красный
+},
 }));
 
 

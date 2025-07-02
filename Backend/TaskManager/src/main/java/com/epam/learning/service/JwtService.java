@@ -26,11 +26,17 @@ public class JwtService {
             throw new RuntimeException("User with this phone number already exists!");
         }
 
-        User user = userService.saveUserFromDto(signUpDto);
-        return ResponseEntity.ok(new TokenDTO(
-                jwtUtil.genToken(user),
-                jwtUtil.genRefreshToken(user)
-        ));
+        if(signUpDto.getConfirmPassword().equals(signUpDto.getPassword())) {
+            User user = userService.saveUserFromDto(signUpDto);
+            return ResponseEntity.ok(new TokenDTO(
+                    jwtUtil.genToken(user),
+                    jwtUtil.genRefreshToken(user)
+            ));
+        }else  {
+            throw new RuntimeException("Confirm Password Mismatch! Try Again!");
+        }
+
+
     }
 
     public ResponseEntity<?> authenticateUser(LoginDTO loginDto) {

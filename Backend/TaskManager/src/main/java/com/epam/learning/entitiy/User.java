@@ -6,6 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.time.Instant;
 import java.util.Collection;
 import java.util.List;
@@ -26,7 +27,8 @@ public class User implements UserDetails {
     @Column(nullable = false, length = 100)
     private String fullName;
 
-    @Column(nullable = false, length = 9)
+    @Column(nullable = false, length = 10)
+    @Size(min = 10, max = 10, message = "Phone number must be exactly 10 digits")
     private String phoneNumber;
 
     @Column(nullable = false)

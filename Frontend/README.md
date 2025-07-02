@@ -15,4 +15,6 @@ or <br>
 and  
 ```npm run preview```
 
+You need to click button top-right and you will go in the reg page or add in the  ```/register```
+in the url
 

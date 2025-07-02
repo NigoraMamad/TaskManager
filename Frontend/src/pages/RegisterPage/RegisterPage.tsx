@@ -50,6 +50,8 @@ const RegistrationPage: React.FC = () => {
 
     if (response.ok) {
       toast.success('New account successfully created');
+      console.log("success",cleanPhone.length);
+
       navigate('/login', { replace: true });
     } else {
       const error = await response.json();

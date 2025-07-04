@@ -17,13 +17,8 @@ import {
   confirmPasswordValidation,
 } from '../../components/AppForm/Validation/AuthValidation';
 import { toast } from 'react-toastify';
+import type { RegistrationPropsInput } from '../../types';
 
-type RegistrationPropsInput = {
-  fullName: string;
-  phoneNumber: string;
-  password: string;
-  confirmPassword: string;
-};
 
 const RegistrationPage: React.FC = () => {
   const { register, handleSubmit, formState, watch } = useForm<RegistrationPropsInput>({
@@ -37,22 +32,22 @@ const RegistrationPage: React.FC = () => {
 
   const onSubmit = async (data: RegistrationPropsInput) => {
   try {
-    const cleanPhone = data.phoneNumber.replace(/\D/g, ''); // оставляет только цифры
+    const cleanPhone = data.phoneNumber.replace(/\D/g, ''); 
     const response = await fetch('http://localhost:8080/api/auth/sign-up', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         fullName: data.fullName,
-        phoneNumber: cleanPhone, // ВАЖНО: поле называется phoneNumber!
+        phoneNumber: cleanPhone, 
         password: data.password,
+        confirmPassword: data.confirmPassword,
       }),
     });
 
     if (response.ok) {
       toast.success('New account successfully created');
       console.log("success",cleanPhone.length);
-
-      navigate('/login', { replace: true });
+      navigate('/', { replace: true });
     } else {
       const error = await response.json();
       console.log(cleanPhone.length);

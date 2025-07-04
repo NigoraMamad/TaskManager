@@ -11,12 +11,8 @@ import { phoneValidation, passwordValidation } from '../../components/AppForm/Va
 import  ErrorMessage  from '../../components/AppForm/Validation/ErrorMessage';
 import AppFormPassword from '../../components/AppForm/AppFormPassword';
 import { toast } from 'react-toastify';
+import type { LoginPropsInput } from '../../types';
 
-
-type LoginPropsInput = {
-  phoneNumber: string;
-  password: string;
- };
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
@@ -25,33 +21,35 @@ const LoginPage: React.FC = () => {
   });
   const phoneError = formState.errors['phoneNumber']?.message;
   const passwordError = formState.errors['password']?.message;
-
+  
 
   const onSubmit = async (data: LoginPropsInput) => {
-  try {
-    const response = await fetch('http://localhost:8080/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        phoneNumber: data.phoneNumber, // ВАЖНО: поле называется phoneNumber!
-        password: data.password,
-      }),
-    });
+    try {
+      const cleanPhone = data.phoneNumber.replace(/\D/g, '');
+      const response = await fetch('http://localhost:8080/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          phoneNumber: cleanPhone,
+          password: data.password,
+        }),
+      });
 
-    if (response.ok) {
-      const tokens = await response.json();
-      localStorage.setItem('accessToken', tokens.accessToken);
-      localStorage.setItem('refreshToken', tokens.refreshToken);
-      toast.success('Login successful!');
-      navigate('/');
-    } else {
-      const error = await response.json();
-      toast.error(error.message || 'Login failed');
+      if (response.ok) {
+        const tokens = await response.json();
+        localStorage.setItem('accessToken', tokens.accessToken);
+        localStorage.setItem('refreshToken', tokens.refreshToken);
+        console.log("Login successful", tokens);
+        toast.success('Login successful!');
+        navigate('/');
+      } else {
+        const error = await response.json();
+        toast.error(error.message || 'Login failed');
+      }
+    } catch (e) {
+      toast.error('Server error');
     }
-  } catch (e) {
-    toast.error('Server error');
-  }
-};
+  };
   
     return (
     <div className="registration-wrapper">

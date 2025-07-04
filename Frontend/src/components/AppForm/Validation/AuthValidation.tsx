@@ -1,9 +1,9 @@
 export const phoneValidation = {
   required: 'Phone is required',
-  // pattern: {
-  //   value: /^\(\d{3}\) \d{3}-\d{2}-\d{2}$/,
-  //   message: 'Enter phone number format should be (000) 000-00-00, and 10 digits.',
-  // },
+  pattern: {
+    value: /^\(\d{3}\) \d{3}-\d{2}-\d{2}$/,
+    message: 'Enter phone number format should be (000) 000-00-00, and 10 digits.',
+  },
 };
 
 export const passwordValidation = {
@@ -12,10 +12,10 @@ export const passwordValidation = {
     value: 8,
     message: 'Password must be at least 8 characters',
   },
-  // pattern: {
-  //   value: /^[A-Za-z0-9]+$/,
-  //   message: 'Password can include only letters and numbers.',
-  // },
+  pattern: {
+    value: /^[A-Za-z0-9]+$/,
+    message: 'Password can include only letters and numbers.',
+  },
 };
 
 export const fullNameValidation = {

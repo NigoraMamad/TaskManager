@@ -30,7 +30,7 @@ public class UserEntity {
 
     @Column(name = "phone_number", nullable = false, unique = true, length = 20)
     @NotBlank(message = "Phone number is required")
-    @Pattern(regexp = "^\\+?[1-9]\\d{1,14}$", message = "Invalid phone number format")
+    @Pattern(regexp = "^(\\(\\d{3}\\) \\d{3}-\\d{2}-\\d{2}|\\d{10})$", message = "Enter phone number format should be (000) 000-00-00, and 10 digits.")
     private String phoneNumber;
 
     @Column(name = "password_hash", nullable = false)

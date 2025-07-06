@@ -24,7 +24,7 @@ public class UserDto {
     private String fullName;
 
     @NotBlank(message = "Phone number is required")
-    @Pattern(regexp = "^\\+?[1-9]\\d{1,14}$", message = "Enter phone number format should be (000) 000-00-00, and 10 digits.")
+    @Pattern(regexp = "^\\(\\d{3}\\) \\d{3}-\\d{2}-\\d{2}$", message = "Enter phone number format should be (000) 000-00-00, and 10 digits.")
     private String phoneNumber;
 
     @NotBlank(message = "Password is required")

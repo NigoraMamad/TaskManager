@@ -32,21 +32,34 @@ public class AuthController {
 
     @PostMapping("/register")
     @ApiOperation("Register a new user")
-    public ResponseEntity<AuthResponseDto> register(@Valid @RequestBody UserDto userDto,
+    public ResponseEntity<AuthResponseDto> register(@RequestBody UserDto userDto,
                                                     BindingResult bindingResult) {
         try {
             log.info("Registration attempt for phone number: {}", userDto.getPhoneNumber());
 
-            // Check for validation errors
-            if (bindingResult.hasErrors()) {
-                Map<String, String> errors = new HashMap<>();
-                for (FieldError error : bindingResult.getFieldErrors()) {
-                    errors.put(error.getField(), error.getDefaultMessage());
-                }
-                log.warn("Validation errors during registration: {}", errors);
+            // Format phone number if needed BEFORE validation
+            String formattedPhone = ValidationUtils.formatPhoneNumber(userDto.getPhoneNumber());
+            userDto.setPhoneNumber(formattedPhone);
+
+            // Manual validation instead of @Valid to control the order
+            if (userDto.getFullName() == null || userDto.getFullName().trim().isEmpty()) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body(AuthResponseDto.builder()
-                                .message("Validation failed: " + errors.toString())
+                                .message("Full name is required")
+                                .build());
+            }
+
+            if (userDto.getPhoneNumber() == null || userDto.getPhoneNumber().trim().isEmpty()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(AuthResponseDto.builder()
+                                .message("Phone number is required")
+                                .build());
+            }
+
+            if (userDto.getPassword() == null || userDto.getPassword().trim().isEmpty()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(AuthResponseDto.builder()
+                                .message("Password is required")
                                 .build());
             }
 
@@ -115,6 +128,10 @@ public class AuthController {
         try {
             log.info("Login attempt for phone number: {}", loginDto.getPhoneNumber());
 
+            // Format phone number if needed
+            String formattedPhone = ValidationUtils.formatPhoneNumber(loginDto.getPhoneNumber());
+            loginDto.setPhoneNumber(formattedPhone);
+
             // Check for validation errors
             if (bindingResult.hasErrors()) {
                 Map<String, String> errors = new HashMap<>();
@@ -141,5 +158,5 @@ public class AuthController {
                             .build());
         }
     }
-    
+
 }

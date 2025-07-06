@@ -1,8 +1,5 @@
 package com.epam.learning.utils;
 
-import com.epam.learning.dto.SignUpDTO;
-import com.epam.learning.entitiy.Role;
-import com.epam.learning.entitiy.enums.RoleName;
 import com.epam.learning.repository.RoleRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;

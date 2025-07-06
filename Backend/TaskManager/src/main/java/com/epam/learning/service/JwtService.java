@@ -3,7 +3,7 @@ package com.epam.learning.service;
 import com.epam.learning.dto.LoginDTO;
 import com.epam.learning.dto.SignUpDTO;
 import com.epam.learning.dto.TokenDTO;
-import com.epam.learning.entitiy.User;
+import com.epam.learning.entity.User;
 import com.epam.learning.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -26,11 +26,17 @@ public class JwtService {
             throw new RuntimeException("User with this phone number already exists!");
         }
 
-        User user = userService.saveUserFromDto(signUpDto);
-        return ResponseEntity.ok(new TokenDTO(
-                jwtUtil.genToken(user),
-                jwtUtil.genRefreshToken(user)
-        ));
+        if(signUpDto.getConfirmPassword().equals(signUpDto.getPassword())) {
+            User user = userService.saveUserFromDto(signUpDto);
+            return ResponseEntity.ok(new TokenDTO(
+                    jwtUtil.genToken(user),
+                    jwtUtil.genRefreshToken(user)
+            ));
+        }else  {
+            throw new RuntimeException("Confirm Password Mismatch! Try Again!");
+        }
+
+
     }
 
     public ResponseEntity<?> authenticateUser(LoginDTO loginDto) {

@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import './App.css'
 import MainPage from './pages/MainPage/MainPage'
 import RegisterPage from './pages/RegisterPage/RegisterPage'
@@ -13,7 +13,8 @@ function App() {
   <BrowserRouter>
         <ToastContainer position="bottom-right" autoClose={5000} aria-label={undefined} />
     <Routes>
-      <Route path="/" element={<MainPage />} />
+      <Route path="/" element={<Navigate to="/register" replace />} />
+      <Route path="/main" element={<MainPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/login" element={<LoginPage />} />
     </Routes>

@@ -1,20 +1,20 @@
 how to run  
 go to path ```TaskManager/Frontend```</br>
 
-run back
 
-Run the command </br>
+Run the command 
+
+
 ```npm install```
 
+```npm run build```
+
+g
 then <br>
 ```npm run dev```
 
-or <br>
-```npm run build```
 
-and  
-```npm run preview```
+you will get url 
+if you need change server port, you can see vite.config.js
 
-You need to click button top-right and you will go in the reg page or add in the  ```/register```
-in the url
 

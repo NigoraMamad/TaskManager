@@ -16,4 +16,6 @@ public class SignUpDTO {
     private String phoneNumber;
     @NotBlank(message = "Password cannot be blank")
     private String password;
+    @NotBlank(message = "Confirmation Password cannot be blank")
+    private String confirmPassword;
 }

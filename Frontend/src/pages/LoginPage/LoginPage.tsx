@@ -41,7 +41,7 @@ const LoginPage: React.FC = () => {
         localStorage.setItem('refreshToken', tokens.refreshToken);
         console.log("Login successful", tokens);
         toast.success('Login successful!');
-        navigate('/');
+        navigate('/main');
       } else {
         const error = await response.json();
         toast.error(error.message || 'Login failed');

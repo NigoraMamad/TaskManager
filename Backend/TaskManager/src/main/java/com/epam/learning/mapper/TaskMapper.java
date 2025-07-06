@@ -1,7 +1,7 @@
 package com.epam.learning.mapper;
 
 import com.epam.learning.dto.TaskDto;
-import com.epam.learning.entity.TaskEntity;
+import com.epam.learning.entitiy.TaskEntity;
 import org.springframework.stereotype.Component;
 
 @Component

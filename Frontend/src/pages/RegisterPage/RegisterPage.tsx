@@ -33,7 +33,7 @@ const RegistrationPage: React.FC = () => {
   const onSubmit = async (data: RegistrationPropsInput) => {
   try {
     const cleanPhone = data.phoneNumber.replace(/\D/g, ''); 
-    const response = await fetch('http://localhost:8080/api/auth/sign-up', {
+    const response = await fetch('http://localhost:8080/api/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -47,7 +47,7 @@ const RegistrationPage: React.FC = () => {
     if (response.ok) {
       toast.success('New account successfully created');
       console.log("success",cleanPhone.length);
-      navigate('/', { replace: true });
+      navigate('/main', { replace: true });
     } else {
       const error = await response.json();
       console.log(cleanPhone.length);

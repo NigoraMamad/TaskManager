@@ -1,7 +1,7 @@
 package com.epam.learning.service;
 
-import com.epam.learning.entitiy.Role;
-import com.epam.learning.entitiy.enums.RoleName;
+import com.epam.learning.entity.Role;
+import com.epam.learning.entity.enums.RoleName;
 import org.springframework.stereotype.Service;
 
 @Service

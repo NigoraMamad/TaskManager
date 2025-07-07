@@ -15,3 +15,15 @@ export interface ColumnType {
   title: string;
   cards: CardItem[];
 }
+
+export type LoginPropsInput = {
+  phoneNumber: string;
+  password: string;
+ };
+
+ export type RegistrationPropsInput = {
+   fullName: string;
+   phoneNumber: string;
+   password: string;
+   confirmPassword: string;
+ };

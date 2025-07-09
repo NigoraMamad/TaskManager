@@ -7,7 +7,7 @@ const AppHeader: React.FC = () => {
     return (
         <header>
             <AppImage src="/logo.svg" alt="logo" className='logo' />
-            <AppLink href="/register" className='logOut'>
+            <AppLink href="/login" className='logOut'>
             <AppImage src='/loginbtn.svg' alt='login-button' className='login'/>
             </AppLink>
             <AppBurgerMenu />

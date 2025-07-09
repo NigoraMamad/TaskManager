@@ -99,14 +99,14 @@ const RegistrationPage: React.FC = () => {
         />
         <AppButton className={styles.getStarted} type="submit">
           <AppHeading level={3} className={styles["button-text"]}>
-            Sign Up
+            Get Started
           </AppHeading>
         </AppButton>
       </form>
       <div className={styles["login-text"]}>
         Already have an account?
         <AppLink href="/login" className={styles["login-link"]}>
-          Sign up
+          Log In
         </AppLink>
       </div>
     </div>

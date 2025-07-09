@@ -34,7 +34,7 @@
 .input-form {
   width: 100%;
   display: grid;
-  gap: 8px;
+  gap: 15px;
 }
 
 .login-text {
@@ -58,7 +58,8 @@
 }
 
 .button-text {
-  font-weight: normal;
+ font-size: 16px;
+  font-weight: 400;
   margin: auto;
   color: #fff;
 }

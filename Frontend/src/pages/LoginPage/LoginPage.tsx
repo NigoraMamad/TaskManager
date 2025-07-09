@@ -1,5 +1,4 @@
 import React from 'react';
-import './LoginPage.css';
 import Phone from '../../components/AppForm/AppFormPhone';
 import AppHeading from '../../components/UI/AppHeading/AppHeading';
 import AppImage from '../../components/UI/AppImage/AppImage';
@@ -12,7 +11,7 @@ import  ErrorMessage  from '../../components/AppForm/Validation/ErrorMessage';
 import AppFormPassword from '../../components/AppForm/AppFormPassword';
 import { toast } from 'react-toastify';
 import type { LoginPropsInput } from '../../types';
-
+import styles from './LoginPage.module.css';
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
@@ -52,26 +51,36 @@ const LoginPage: React.FC = () => {
   };
   
     return (
-    <div className="registration-wrapper">
-      <AppLink href="/" className="logo-link">
-        <AppImage src="/regLogo.svg" alt="logo" className='logo' />
-      </AppLink>
-      <AppHeading level={1} children="Log in to your account" />
-      <AppHeading level={3} children="Welcome back! Please enter your details." />
-      <form className="input-form" onSubmit={handleSubmit(onSubmit)}>
-        <Phone {...register ('phoneNumber', phoneValidation)} />
-        <ErrorMessage error={phoneError}/>
-        <AppFormPassword
+  <div className={styles['registration-wrapper']}>
+    <AppLink href="/" className={styles['logo-link']}>
+      <AppImage src="/regLogo.svg" alt="logo" className={styles.logo} />
+    </AppLink>
+    <AppHeading className={styles.headingOne}level={1} children="Log in to your account" />
+    <AppHeading className={styles.headingTwo} level={3} children="Welcome back! Please enter your details." />
+    <form className={styles['input-form']} onSubmit={handleSubmit(onSubmit)}>
+      <Phone {...register('phoneNumber', phoneValidation)}
+      className={styles.phoneInput} 
+      />
+      <ErrorMessage 
+      error={phoneError} 
+      className={styles['error-message']}
+      />
+      <AppFormPassword
         label="Password"
-        {...register ('password', passwordValidation)}/>
-        <ErrorMessage error={passwordError}/>
-        <AppButton className="getStarted" type="submit" children={
-          <AppHeading level={3} className="button-text" children="Log In"/>
-          }/>
-      </form>
-    <div className="login-text">
+        {...register('password', passwordValidation)}
+        className={styles.passwordInput}
+      />
+      <ErrorMessage 
+      error={passwordError} 
+      className={styles['error-message']}
+      />
+      <AppButton className={styles.getStarted} type="submit" children={
+        <AppHeading level={3} className={styles['button-text']} children="Log In"/>
+      }/>
+    </form>
+    <div className={styles['login-text']}>
       Already have an account? 
-      <AppLink href="/register" className="login-link">
+      <AppLink href="/register" className={styles['login-link']}>
         Sign Up
       </AppLink>
     </div>

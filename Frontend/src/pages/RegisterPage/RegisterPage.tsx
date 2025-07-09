@@ -1,5 +1,5 @@
 import React from 'react';
-import './RegisterPage.css';
+import styles from './RegisterPage.module.css';
 import FullName from '../../components/AppForm/AppFormFullName';
 import Phone from '../../components/AppForm/AppFormPhone';
 import AppHeading from '../../components/UI/AppHeading/AppHeading';
@@ -59,40 +59,53 @@ const RegistrationPage: React.FC = () => {
 };
 
   return (
-    <div className="registration-wrapper">
-      <AppLink href="/" className="logo-link">
-        <AppImage src="/regLogo.svg" alt="logo" className="logo" />
+    <div className={styles['registration-wrapper']}>
+      <AppLink href="/" className={styles['logo-link']}>
+        <AppImage src="/regLogo.svg" alt="logo" className={styles.logo} />
       </AppLink>
-      <AppHeading level={1}>Create an account</AppHeading>
-      <AppHeading level={3}>Start your planning today</AppHeading>
-      <form className="input-form" onSubmit={handleSubmit(onSubmit)}>
+      <AppHeading className={styles.headingOne} level={1}>Create an account</AppHeading>
+      <AppHeading className={styles.headingTwo} level={3}>Start your planning today</AppHeading>
+      <form className={styles["input-form"]} onSubmit={handleSubmit(onSubmit)}>
         <FullName {...register('fullName', fullNameValidation)}
-          error={!!fullNameError} />
-        <ErrorMessage error={fullNameError} />
+          error={!!fullNameError} 
+          />
+        <ErrorMessage 
+        error={fullNameError} 
+        className={styles['error-message']}
+        />
         <Phone {...register('phoneNumber', phoneValidation)}
           error={!!phoneError} />
-        <ErrorMessage error={phoneError} />
+        <ErrorMessage 
+        error={phoneError} 
+        className={styles['error-message']}
+        />
         <AppFormPassword
           label="Create Password"
           {...register('password', passwordValidation)}
           error={!!passwordError}
         />
-        <ErrorMessage error={passwordError} />
+        <ErrorMessage 
+        error={passwordError}
+        className={styles['error-message']}
+        />
         <AppFormPassword
           label="Confirm Password"
           {...register('confirmPassword', confirmPasswordValidation(watch))}
           error={!!confirmPasswordError}
         />
-        <ErrorMessage error={confirmPasswordError} />
-        <AppButton className="getStarted" type="submit">
-          <AppHeading level={3} className="button-text">
+        <ErrorMessage 
+        error={confirmPasswordError} 
+        className={styles['error-message']}
+        />
+        <AppButton className={styles.getStarted} type="submit">
+          <AppHeading level={3} className={styles["button-text"]}>
             Sign Up
           </AppHeading>
         </AppButton>
       </form>
-      <div className="login-text">
+      <div className={styles["login-text"]}>
         Already have an account?
-        <AppLink href="/login" className="login-link">
+        <AppLink href="/login" className={styles["login-link"]}>
           Sign up
         </AppLink>
       </div>

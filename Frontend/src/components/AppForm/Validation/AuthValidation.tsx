@@ -13,14 +13,14 @@ export const passwordValidation = {
     message: 'Password must be at least 8 characters',
   },
   pattern: {
-    value: /^[A-Za-z0-9]+$/,
-    message: 'Password can include only letters and numbers.',
+    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/,
+    message: 'Password must contain at least one uppercase letter, one lowercase letter, and one number. examle Winter123',
   },
 };
 
 export const fullNameValidation = {
   required: 'Full Name is required', 
-  maxLenght: {
+  maxLength: {
     value: 30,
     message: 'Name must be under 30 characters',
   },

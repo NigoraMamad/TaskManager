@@ -76,3 +76,14 @@
     line-height: 160%;
 
 }
+
+.priority.top {
+    background-color: #FBB6B6;
+    color: #303240;
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    line-height: 160%;
+    vertical-align: middle;
+    width: 95px;
+    height: 18px;
+}

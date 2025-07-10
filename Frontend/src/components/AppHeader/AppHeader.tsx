@@ -1,18 +1,25 @@
-import './AppHeader.css';
+import { useNavigate } from 'react-router-dom';
 import AppImage from '../UI/AppImage/AppImage';
 import AppBurgerMenu from '../UI/AppBurgerMenu/AppBurgerMenu';
-import AppLink from '../UI/AppLink/AppLink';
+import './AppHeader.css';
 
 const AppHeader: React.FC = () => {
-    return (
-        <header>
-            <AppImage src="/logo.svg" alt="logo" className='logo' />
-            <AppLink href="/login" className='logOut'>
-            <AppImage src='/loginbtn.svg' alt='login-button' className='login'/>
-            </AppLink>
-            <AppBurgerMenu />
-        </header>
-    );
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('accessToken'); // ❌ удаляем токен
+    navigate('/login');                     // 🔁 редирект на login
+  };
+
+  return (
+    <header>
+      <AppImage src="/logo.svg" alt="logo" className="logo" />
+      <button className="logOut" onClick={handleLogout}>
+        <AppImage src="/loginbtn.svg" alt="login-button" className="login" />
+      </button>
+      <AppBurgerMenu />
+    </header>
+  );
 };
 
 export default AppHeader;

@@ -1,126 +1,45 @@
-import { useState } from 'react';
-import { Column } from '../Column/Column';
-import { TaskModal } from '../../UI/TaskModal/TaskModal';
-import { type ColumnType, type CardItem } from '../../../types';
-import './Board.css';
+import React, { useState } from "react";
+import { Column } from "../Column/Column";
+import { TaskModal } from "../../UI/TaskModal/TaskModal";
+import type { ColumnType, CardItem } from "../../../types";
+import "./Board.css";
 
-const boardData: ColumnType[] = [
-  {
-    id: 'todo',
-    title: 'To Do',
-    cards: [
-      {
-        id: '1',
-        title: 'Requirement Analysis',
-        description: 'Thoroughly analyze the user stories...',
-        dueDate: '2024-05-21',
-        priority: 'Low',
-        status: 'To do',
-        createdAt: '2024-05-01',
-      },
-      {
-        id: '2',
-        title: 'Visual Design',
-        description: 'Establish a design system...',
-        dueDate: '2024-05-21',
-        priority: 'Medium',
-        status: 'To do',
-        createdAt: '2024-05-01',
-      },
-    ],
-  },
-  {
-    id: 'inProgress',
-    title: 'In Progress',
-    cards: [
-      {
-        id: '3',
-        title: 'Wireframing',
-        description: 'Create low-fidelity sketches...',
-        dueDate: '2024-05-21',
-        priority: 'Low',
-        status: 'In progress',
-        createdAt: '2024-05-02',
-      },
-      {
-        id: '4',
-        title: 'Development Handoff',
-        description: 'Prepare detailed dev specs...',
-        dueDate: '2024-05-21',
-        priority: 'Medium',
-        status: 'In progress',
-        createdAt: '2024-05-02',
-      },
-    ],
-  },
-  {
-    id: 'review',
-    title: 'Review',
-    cards: [
-      {
-        id: '5',
-        title: 'Research',
-        description: 'Conduct research to understand the target audience...',
-        dueDate: '2024-05-21',
-        priority: 'Top',
-        status: 'Review',
-        createdAt: '2024-05-03',
-      },
-    ],
-  },
-  {
-    id: 'done',
-    title: 'Done',
-    cards: [],
-  },
-];
+interface BoardProps {
+  columns: ColumnType[];
+  onAddCard: (columnId: string) => void;
+  onEditCard: (card: CardItem, columnId: string) => void;
+  onSave: (card: CardItem) => Promise<void>;
+  onDelete: (id: string) => Promise<void>;
+}
 
-const Board: React.FC = () => {
-  const [columns, setColumns] = useState<ColumnType[]>(boardData);
+const Board: React.FC<BoardProps> = ({ columns, onAddCard, onEditCard, onSave, onDelete }) => {
   const [showModal, setShowModal] = useState(false);
   const [activeCard, setActiveCard] = useState<CardItem | null>(null);
-  const [/*activeColumnId*/, setActiveColumnId] = useState<string | null>(null);
+  const [activeColumnId, setActiveColumnId] = useState<string | null>(null);
 
   const handleAddCard = (columnId: string) => {
     setActiveColumnId(columnId);
-    setActiveCard(null); // новое задание
+    setActiveCard(null);
     setShowModal(true);
+    onAddCard(columnId); // если нужна дополнительная логика из MainPage
   };
 
   const handleEditCard = (card: CardItem, columnId: string) => {
     setActiveColumnId(columnId);
     setActiveCard(card);
     setShowModal(true);
+    onEditCard(card, columnId); // если нужна дополнительная логика из MainPage
   };
 
-  const handleSave = (newCard: CardItem) => {
-    setColumns(prev =>
-      prev.map(col =>
-        col.id === newCard.status?.toLowerCase().replace(' ', '')
-          ? {
-              ...col,
-              cards: col.cards.some(c => c.id === newCard.id)
-                ? col.cards.map(c => (c.id === newCard.id ? newCard : c))
-                : [...col.cards, newCard],
-            }
-          : {
-              ...col,
-              cards: col.cards.filter(c => c.id !== newCard.id),
-            }
-      )
-    );
+  const handleSaveModal = async (card: CardItem) => {
+    await onSave(card);
     setShowModal(false);
     setActiveCard(null);
     setActiveColumnId(null);
   };
 
-  const handleDelete = (id: string) => {
-    setColumns(prev =>
-      prev.map(col => ({
-        ...col,
-        cards: col.cards.filter(c => c.id !== id),
-      }))
-    );
+  const handleDeleteModal = async (id: string) => {
+    await onDelete(id);
     setShowModal(false);
     setActiveCard(null);
     setActiveColumnId(null);
@@ -129,7 +48,7 @@ const Board: React.FC = () => {
   return (
     <>
       <div className="board">
-        {columns.map(col => (
+        {columns.map((col) => (
           <Column
             key={col.id}
             title={col.title}
@@ -144,8 +63,8 @@ const Board: React.FC = () => {
         <TaskModal
           card={activeCard ?? undefined}
           onClose={() => setShowModal(false)}
-          onSave={handleSave}
-          onDelete={handleDelete}
+          onSave={handleSaveModal}
+          onDelete={handleDeleteModal}
         />
       )}
     </>

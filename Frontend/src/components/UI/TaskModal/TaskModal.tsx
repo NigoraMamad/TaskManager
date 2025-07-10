@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { type CardItem, type Priority, type Status } from '../../../types';
 import './TaskModal.css';
 
@@ -11,26 +11,55 @@ interface Props {
 
 export const TaskModal: React.FC<Props> = ({ onClose, onSave, onDelete, card }) => {
   const [title, setTitle] = useState(card?.title || '');
-  const [status, setStatus] = useState<Status>(card?.status || 'To do');
-  const [priority, setPriority] = useState<Priority>(card?.priority || 'Low');
-  const [dueDate, setDueDate] = useState(card?.dueDate || '');
-  const [description, setDescription] = useState(card?.description || '');
-  const createdAt = card?.createdAt || new Date().toISOString().split('T')[0];
+  const [status, setStatus] = useState<Status>(card?.status || 'TODO');
+  const [priority, setPriority] = useState<Priority>(card?.priority || 'LOW');
 
+  // Для дат храним в состоянии строку в формате YYYY-MM-DD для <input type="date">
+  const [dueDateStr, setDueDateStr] = useState<string>('');
+  const [createdDateStr, setCreatedDateStr] = useState<string>('');
+
+  const [content, setContent] = useState(card?.content || '');
+
+  // Конвертация timestamp (ms) в строку 'YYYY-MM-DD'
+  const timestampToDateInput = (ts: number | undefined): string => {
+    if (!ts) return '';
+    const date = new Date(ts);
+    return date.toISOString().split('T')[0];
+  };
+
+  // Конвертация строки 'YYYY-MM-DD' в timestamp (ms)
+  const dateInputToTimestamp = (dateStr: string): number => {
+    if (!dateStr) return 0;
+    return new Date(dateStr).getTime();
+  };
+
+  useEffect(() => {
+    if (card) {
+      setDueDateStr(timestampToDateInput(card.dueDate));
+      setCreatedDateStr(timestampToDateInput(card.createdDate));
+    } else {
+      setDueDateStr('');
+      setCreatedDateStr(timestampToDateInput(Date.now()));
+    }
+  }, [card]);
+
+
+  // Формируем объект карточки для сохранения
   const handleSave = () => {
     if (!title.trim()) return;
 
-    const newCard: CardItem = {
-      id: card?.id || Date.now().toString(),
-      title,
-      description,
-      dueDate,
+    const newCard: Omit<CardItem, 'id'> & Partial<Pick<CardItem, 'id'>> = {
+      ...(card?.id ? { id: card.id } : {}), // только если редактируем
+      title: title.trim(),
+      content,
+      dueDate: dateInputToTimestamp(dueDateStr),
+      createdDate: card?.createdDate || Date.now(),
       priority,
       status,
-      createdAt,
+      userId: card?.userId || 0,
     };
 
-    onSave(newCard);
+    onSave(newCard as CardItem); // кастуем
   };
 
   const handleDelete = () => {
@@ -48,46 +77,70 @@ export const TaskModal: React.FC<Props> = ({ onClose, onSave, onDelete, card }) 
             value={title}
             onChange={e => setTitle(e.target.value)}
             placeholder="Name the Task"
+            autoFocus
           />
-          <button className="close" onClick={onClose}>×</button>
+          <button className="close" onClick={onClose} aria-label="Close modal">×</button>
         </div>
 
         <div className="modal-content">
-          <label>Status</label>
-          <select value={status} onChange={e => setStatus(e.target.value as Status)}>
-            <option value="Empty">Empty</option>
-            <option value="To do">To Do</option>
-            <option value="In progress">In Progress</option>
-            <option value="Review">Review</option>
-            <option value="Done">Done</option>
+          <label htmlFor="status-select">Status</label>
+          <select
+            id="status-select"
+            value={status}
+            onChange={e => setStatus(e.target.value as Status)}
+          >
+            <option value="TODO">To Do</option>
+            <option value="IN_PROGRESS">In Progress</option>
+            <option value="REVIEW">Review</option>
+            <option value="DONE">Done</option>
           </select>
 
-          <label>Priority</label>
-          <select value={priority} onChange={e => setPriority(e.target.value as Priority)}>
-            <option value="Low">Low</option>
-            <option value="Medium">Medium</option>
-            <option value="Top">Top</option>
+          <label htmlFor="priority-select">Priority</label>
+          <select
+            id="priority-select"
+            value={priority}
+            onChange={e => setPriority(e.target.value as Priority)}
+          >
+            <option value="LOW">Low</option>
+            <option value="MEDIUM">Medium</option>
+            <option value="HIGH">High</option>
+            <option value="CRITICAL">Critical</option>
           </select>
 
-          <label>Due date</label>
-          <input type="date" value={dueDate} onChange={e => setDueDate(e.target.value)} />
+          <label htmlFor="due-date-input">Due date</label>
+          <input
+            id="due-date-input"
+            type="date"
+            value={dueDateStr}
+            onChange={e => setDueDateStr(e.target.value)}
+          />
 
-          <label>Creation date</label>
-          <input type="text" value={createdAt} disabled />
+          <label htmlFor="created-date-input">Creation date</label>
+          <input
+            id="created-date-input"
+            type="text"
+            value={createdDateStr}
+            disabled
+          />
 
-          <label>Description</label>
+          <label htmlFor="description-textarea">Description</label>
           <textarea
-            value={description}
-            onChange={e => setDescription(e.target.value)}
+            id="description-textarea"
+            value={content}
+            onChange={e => setContent(e.target.value)}
             placeholder="Please describe the Task"
           />
         </div>
 
         <div className="modal-footer">
           {card && onDelete && (
-            <button className="delete-btn" onClick={handleDelete}>🗑 Delete</button>
+            <button className="delete-btn" onClick={handleDelete} type="button">
+              🗑 Delete
+            </button>
           )}
-          <button className="save-btn" onClick={handleSave}>Save</button>
+          <button className="save-btn" onClick={handleSave} type="button">
+            Save
+          </button>
         </div>
       </div>
     </div>

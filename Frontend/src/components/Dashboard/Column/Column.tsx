@@ -15,14 +15,20 @@ export const Column: React.FC<Props> = ({ title, cards, onAddCard, onCardClick }
     <div className="column">
       <div className="column-header">
         <h2>{title}</h2>
-        <button className="add-btn" onClick={onAddCard}>+</button>
+        <button className="add-btn" onClick={onAddCard} aria-label={`Add card to ${title}`}>
+          +
+        </button>
       </div>
 
-      {cards.map(card => (
-        <Card key={card.id} card={card} onClick={() => onCardClick(card)} />
-      ))}
+      <div className="card-list">
+        {cards.map(card => (
+          <Card key={card.id} card={card} onClick={() => onCardClick(card)} />
+        ))}
+      </div>
 
-      <button className="add-link" onClick={onAddCard}>+ Add a card</button>
+      <button className="add-link" onClick={onAddCard}>
+        + Add a card
+      </button>
     </div>
   );
 };

@@ -1,13 +1,15 @@
-export type Priority = "Low" | "Medium" | "Top";
-export type Status = 'Empty' | 'To do' | 'In progress' | 'Review' | 'Done';
+export type Priority = "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
+export type Status = "TODO" | "IN_PROGRESS" | "REVIEW" | "DONE";
+
 export interface CardItem {
-  id: string;
+  id?: string;
   title: string;
-  description: string;
-  dueDate: string;
+  content: string; // вместо description
+  dueDate: number; // UNIX timestamp (в мс)
+  createdDate: number; // UNIX timestamp (в мс)
   priority: Priority;
-  status?: Status;
-  createdAt?: string;
+  status: Status;
+  userId: number;
 }
 
 export interface ColumnType {
@@ -19,11 +21,11 @@ export interface ColumnType {
 export type LoginPropsInput = {
   phoneNumber: string;
   password: string;
- };
+};
 
- export type RegistrationPropsInput = {
-   fullName: string;
-   phoneNumber: string;
-   password: string;
-   confirmPassword: string;
- };
+export type RegistrationPropsInput = {
+  fullName: string;
+  phoneNumber: string;
+  password: string;
+  confirmPassword: string;
+};

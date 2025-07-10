@@ -4,11 +4,17 @@ import './TableView.css';
 
 interface Props {
   columns: ColumnType[];
-  onAddCard: () => void;
+  onAddCard: (columnId: string) => void;
 }
 
 const TableView: React.FC<Props> = ({ columns, onAddCard }) => {
   const allCards = columns.flatMap(col => col.cards);
+
+  const formatDate = (timestamp?: number): string => {
+    if (!timestamp) return '-';
+    const date = new Date(timestamp);
+    return date.toLocaleDateString();
+  };
 
   return (
     <div className="table-view">
@@ -17,27 +23,52 @@ const TableView: React.FC<Props> = ({ columns, onAddCard }) => {
           <tr>
             <th>Task</th>
             <th>Description</th>
-            <th>Creation Date</th>
-            <th>Due Date</th>
+            <th>Created</th>
+            <th>Due</th>
             <th>Priority</th>
             <th>Status</th>
           </tr>
         </thead>
         <tbody>
-          {allCards.map(card => (
-            <tr key={card.id}>
-              <td>{card.title}</td>
-              <td>{card.description}</td>
-              <td>{card.createdAt}</td>
-              <td>{card.dueDate}</td>
-              <td><span className={`tag ${card.priority.toLowerCase()}`}>{card.priority}</span></td>
-              <td><span className={`status-tag ${card.status?.toLowerCase().replace(' ', '-')}`}>{card.status}</span></td>
-            </tr>
-          ))}
+          {allCards.map(card => {
+            const cssPriority = card.priority.toLowerCase();
+            const cssStatus = card.status.toLowerCase().replace(/_/g, '-');
+            return (
+              <tr key={card.id}>
+                <td>{card.title}</td>
+                <td>{card.content}</td>
+                <td>{formatDate(card.createdDate)}</td>
+                <td>{formatDate(card.dueDate)}</td>
+                <td>
+                  <span className={`tag ${cssPriority}`}>
+                    {card.priority}
+                  </span>
+                </td>
+                <td>
+                  <span className={`status-tag ${cssStatus}`}>
+                    {card.status}
+                  </span>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
 
-      <button className="add-link" onClick={onAddCard}>+ Add a card</button>
+      {/* Кнопки для добавления карточки в каждую колонку */}
+      <div style={{ marginTop: 20 }}>
+        {columns.map(col => (
+          <button
+            key={col.id}
+            className="add-link"
+            onClick={() => onAddCard(col.id)}
+            aria-label={`Add a new card to ${col.title}`}
+            style={{ marginRight: 8, marginBottom: 8 }}
+          >
+            + Add a card to {col.title}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };

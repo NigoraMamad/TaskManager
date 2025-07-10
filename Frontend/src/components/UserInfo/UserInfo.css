@@ -1,86 +1,96 @@
 :root {
-    --darkBlack: #202022;
-    --white: #FFFFFF;
-    --lightWhite: #FFFFFF99;
-    --lightGreen: #C1E288;
-    --lighblue: #303240;
+  --darkBlack: #202022;
+  --white: #ffffff;
+  --lightWhite: #ffffff99;
+  --lightGreen: #C1E288;
+  --lighblue: #303240;
 }
 
 .userinfowrapper {
     padding: 22px calc(5.63vw - 1.12px);
-    width: 100%;
-    height: 109px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: var(--darkBlack);
+  width: 100%;
+  height: 109px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--darkBlack);
+  font-family: 'Inter', sans-serif;
 }
 
 .userinfowrapper .username {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
 .userinfowrapper .username h1 {
-    font-family: 'Inter', sans-serif;
-    font-weight: 600;
-    font-size: 24px;
-    line-height: 130%;
-    color: var(--white);
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 130%;
+  color: var(--white);
 }
 
 .userinfowrapper .username span {
-    font-family: 'Inter', sans-serif;
-    font-size: 16px;
-    line-height: 160%;
-    color: var(--lightWhite);
+  font-size: 16px;
+  line-height: 160%;
+  color: var(--lightWhite);
 }
 
 .userinfowrapper .username .userRole {
-    position: absolute;
-    top: 5px;
-    right: -60px;
-    width: 43px;
-    height: 18px;
-    padding-right: 6px;
-    padding-left: 6px;
-    border-radius: 4px;
-    background-color: var(--lightGreen);
-    font-family: 'Source Sans Pro', sans-serif;
-    font-size: 10px;
-    line-height: 12px;
-    vertical-align: middle;
-    color: var(--lighblue);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  position: absolute;
+  top: 5px;
+  right: -60px;
+  width: fit-content;
+  height: 18px;
+  padding: 0 6px;
+  border-radius: 4px;
+  background-color: var(--lightGreen);
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 10px;
+  line-height: 12px;
+  color: var(--lighblue);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
 }
 
 .userinfowrapper .userphone {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  text-align: right;
 }
 
 .userinfowrapper .userphone h2 {
-    font-family: 'Inter', sans-serif;
-    font-size: 14.48px;
-    line-height: 100%;
-    color: var(--lightWhite);
+  font-size: 14.48px;
+  line-height: 100%;
+  color: var(--lightWhite);
 }
 
 .userinfowrapper .userphone span {
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    font-size: 14.48px;
-    line-height: 100%;
-    color: var(--white);
+  font-weight: 500;
+  font-size: 14.48px;
+  line-height: 100%;
+  color: var(--white);
 }
 
-@media (max-width:768px) {
-    .userinfowrapper .userphone {
-        display: none;
-    }
+/* ✅ Минимальная адаптация без уродства */
+@media (max-width: 768px) {
+  .userinfowrapper {
+    height: auto;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .userinfowrapper .userphone {
+    display: none;
+  }
+
+  .userinfowrapper .username .userRole {
+    position: static;
+    margin-top: 6px;
+  }
 }

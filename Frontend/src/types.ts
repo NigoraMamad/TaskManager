@@ -2,7 +2,7 @@ export type Priority = "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
 export type Status = "TODO" | "IN_PROGRESS" | "REVIEW" | "DONE";
 
 export interface CardItem {
-  id?: string;
+  id: string;
   title: string;
   content: string; // вместо description
   dueDate: number; // UNIX timestamp (в мс)

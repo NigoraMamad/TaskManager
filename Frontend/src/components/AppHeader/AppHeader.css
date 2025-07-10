@@ -25,7 +25,10 @@ header .login {
     width: 24px;
     height: 24px;
 }
-
+header .logOut {
+    border: none;
+    background-color: transparent;
+}
 .burger {
     display: none;
 }

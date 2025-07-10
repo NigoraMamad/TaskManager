@@ -1,13 +1,14 @@
 import React from 'react';
-import { type ColumnType } from '../../../types';
+import { type ColumnType, type CardItem } from '../../../types';
 import './TableView.css';
 
 interface Props {
   columns: ColumnType[];
   onAddCard: (columnId: string) => void;
+  onEditCard: (card: CardItem) => void;
 }
 
-const TableView: React.FC<Props> = ({ columns, onAddCard }) => {
+const TableView: React.FC<Props> = ({ columns, onAddCard, onEditCard }) => {
   const allCards = columns.flatMap(col => col.cards);
 
   const formatDate = (timestamp?: number): string => {
@@ -21,12 +22,8 @@ const TableView: React.FC<Props> = ({ columns, onAddCard }) => {
       <table className="task-table">
         <thead>
           <tr>
-            <th>Task</th>
-            <th>Description</th>
-            <th>Created</th>
-            <th>Due</th>
-            <th>Priority</th>
-            <th>Status</th>
+            <th>Task</th><th>Description</th><th>Created</th>
+            <th>Due</th><th>Priority</th><th>Status</th><th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -35,19 +32,24 @@ const TableView: React.FC<Props> = ({ columns, onAddCard }) => {
             const cssStatus = card.status.toLowerCase().replace(/_/g, '-');
             return (
               <tr key={card.id}>
-                <td>{card.title}</td>
-                <td>{card.content}</td>
-                <td>{formatDate(card.createdDate)}</td>
-                <td>{formatDate(card.dueDate)}</td>
-                <td>
-                  <span className={`tag ${cssPriority}`}>
-                    {card.priority}
-                  </span>
+                <td data-label="Task">{card.title}</td>
+                <td data-label="Description">{card.content}</td>
+                <td data-label="Created">{formatDate(card.createdDate)}</td>
+                <td data-label="Due">{formatDate(card.dueDate)}</td>
+                <td data-label="Priority">
+                  <span className={`tag ${cssPriority}`}>{card.priority}</span>
                 </td>
-                <td>
-                  <span className={`status-tag ${cssStatus}`}>
-                    {card.status}
-                  </span>
+                <td data-label="Status">
+                  <span className={`status-tag ${cssStatus}`}>{card.status}</span>
+                </td>
+                <td data-label="Actions">
+                  <button
+                    onClick={() => onEditCard(card)}
+                    style={{ cursor: 'pointer', padding: '4px 8px' }}
+                    aria-label={`Edit task ${card.title}`}
+                  >
+                    Edit
+                  </button>
                 </td>
               </tr>
             );
@@ -55,7 +57,6 @@ const TableView: React.FC<Props> = ({ columns, onAddCard }) => {
         </tbody>
       </table>
 
-      {/* Кнопки для добавления карточки в каждую колонку */}
       <div style={{ marginTop: 20 }}>
         {columns.map(col => (
           <button

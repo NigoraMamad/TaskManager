@@ -1,14 +1,17 @@
 .table-view {
   padding: 16px;
-  background: white;
+  background: #fff;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  font-family: Inter, sans-serif;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  font-family: 'Inter', sans-serif;
+  overflow-x: auto;
 }
 
+/* DESKTOP */
 .task-table {
   width: 100%;
   border-collapse: collapse;
+  min-width: 700px;
 }
 
 .task-table th,
@@ -17,19 +20,26 @@
   text-align: left;
   border-bottom: 1px solid #eee;
   font-size: 14px;
+  vertical-align: middle;
 }
 
 .task-table th {
-  background-color: #f9f9f9;
-  color: #888;
-  font-weight: 500;
+  background-color: #f5f5f5;
+  color: #666;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 13px;
 }
 
 .tag {
-  padding: 4px 8px;
-  border-radius: 6px;
+  padding: 4px 10px;
+  border-radius: 20px;
   font-size: 12px;
+  font-weight: 600;
   color: white;
+  display: inline-block;
+  min-width: 70px;
+  text-align: center;
 }
 
 .tag.low { background-color: #8bc34a; }
@@ -37,25 +47,98 @@
 .tag.top { background-color: #f44336; }
 
 .status-tag {
-  padding: 4px 8px;
-  border-radius: 6px;
+  padding: 4px 10px;
+  border-radius: 20px;
   font-size: 12px;
-  background-color: #e0e0e0;
-  color: #333;
+  font-weight: 500;
   text-transform: capitalize;
+  display: inline-block;
+  min-width: 80px;
+  text-align: center;
 }
 
-.status-tag.to-do { background-color: #2196f3; color: white; }
+.status-tag.to-do { background-color: #2196f3; color: #fff; }
 .status-tag.in-progress { background-color: #ffeb3b; color: #000; }
-.status-tag.review { background-color: #9c27b0; color: white; }
-.status-tag.done { background-color: #4caf50; color: white; }
+.status-tag.review { background-color: #9c27b0; color: #fff; }
+.status-tag.done { background-color: #4caf50; color: #fff; }
 
 .add-link {
   margin-top: 12px;
   display: inline-block;
   color: #5f5fc4;
-  background: none;
+  background-color: #f2f2ff;
+  padding: 8px 12px;
+  border-radius: 8px;
   border: none;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+.add-link:hover {
+  background-color: #e2e2fc;
+}
+
+/* === MOBILE: превращаем таблицу в горизонтальные карточки === */
+@media (max-width: 768px) {
+  .task-table {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 10px;
+  }
+
+  .task-table thead {
+    display: none;
+  }
+
+  .task-table tbody {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+  }
+
+  .task-table tr {
+    display: flex;
+    flex-direction: column;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    padding: 12px;
+    min-width: 260px;
+    scroll-snap-align: start;
+    flex-shrink: 0;
+  }
+
+  .task-table td {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 6px;
+    font-size: 13px;
+  }
+
+  .task-table td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    color: #777;
+    font-size: 12px;
+    margin-bottom: 2px;
+  }
+
+  .tag,
+  .status-tag {
+    font-size: 11px;
+    padding: 4px 8px;
+    white-space: nowrap;
+  }
+
+  .add-link {
+    width: 100%;
+    display: block;
+    margin-top: 16px;
+    font-size: 15px;
+  }
 }

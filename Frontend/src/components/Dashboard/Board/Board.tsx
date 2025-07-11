@@ -91,6 +91,7 @@ const Board: React.FC<BoardProps> = ({
     // Обновляем статус, если карточка переместилась в другую колонку
     if (sourceColumn.id !== destColumn.id) {
       draggedCard.status = destColumn.id as Status;
+      onSave(draggedCard);
     }
 
     // Вставляем карточку в новую позицию

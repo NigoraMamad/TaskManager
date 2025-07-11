@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import ErrorMessage from '../../components/AppForm/Validation/ErrorMessage';
 import AppFormPassword from '../../components/AppForm/AppFormPassword';
+import { useAuth } from '../../hooks/useAuth';
 import {
   fullNameValidation,
   phoneValidation,
@@ -29,36 +30,43 @@ const RegistrationPage: React.FC = () => {
   const fullNameError = formState.errors['fullName']?.message;
   const passwordError = formState.errors['password']?.message;
   const confirmPasswordError = formState.errors['confirmPassword']?.message;
+  const { saveToken, saveUserInfo } = useAuth();
 
   const onSubmit = async (data: RegistrationPropsInput) => {
-  try {
-    const cleanPhone = data.phoneNumber.replace(/\D/g, ''); 
-    const response = await fetch('http://localhost:8080/auth/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        fullName: data.fullName,
-        phoneNumber: cleanPhone, 
-        password: data.password,
-        confirmPassword: data.confirmPassword,
-      }),
-    });
+    try {
+      const cleanPhone = data.phoneNumber.replace(/\D/g, '');
+      const response = await fetch('http://localhost:8080/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fullName: data.fullName,
+          phoneNumber: cleanPhone,
+          password: data.password,
+          confirmPassword: data.confirmPassword,
+        }),
+      });
 
-    if (response.ok) {
-      const responseData = await response.json();
-      toast.success('New account successfully created');
-      console.log("success", data);
-      localStorage.setItem('accessToken', responseData.token);
-      navigate('/main', { replace: true });
-    } else {
-      const error = await response.json();
-      console.log(data);
-      toast.error(error.message || 'Registration failed');
+      if (response.ok) {
+        const result = await response.json();
+
+        saveToken(result.token); // Сохраняем токен
+        saveUserInfo({
+          id: result.id,
+          fullName: result.fullName,
+          phoneNumber: cleanPhone,
+        });
+
+        toast.success('New account successfully created');
+        navigate('/main', { replace: true });
+      } else {
+        const error = await response.json();
+        console.log(data);
+        toast.error(error.message || 'Registration failed');
+      }
+    } catch (e) {
+      toast.error('Server error');
     }
-  } catch (e) {
-    toast.error('Server error');
-  }
-};
+  };
 
   return (
     <div className={styles['registration-wrapper']}>

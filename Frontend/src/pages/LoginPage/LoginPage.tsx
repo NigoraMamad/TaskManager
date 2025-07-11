@@ -48,7 +48,6 @@ const LoginPage: React.FC = () => {
           phoneNumber: cleanPhone,
         });
 
-        localStorage.setItem("refreshToken", result.refreshToken || "");
 
         toast.success("Login successful!");
         navigate("/main");

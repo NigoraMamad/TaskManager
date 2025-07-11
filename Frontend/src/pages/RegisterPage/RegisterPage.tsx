@@ -44,10 +44,8 @@ const RegistrationPage: React.FC = () => {
       }),
     });
 
-    const responseData = await response.json();
     if (response.ok) {
       toast.success('New account successfully created');
-      localStorage.setItem('accessToken', responseData.token);
       console.log("success", data);
       navigate('/main', { replace: true });
     } else {

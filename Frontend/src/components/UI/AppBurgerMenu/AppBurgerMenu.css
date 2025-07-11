@@ -1,0 +1,100 @@
+/* ...existing code... */
+
+/* Burger menu panel styles */
+.burger-menu-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100vh;
+    background: var(--darkBlack);
+    box-shadow: 0 0 0 3px #5f9fff;
+    z-index: 1000;
+    animation: slideIn 0.3s;
+        font-family: 'Inter', sans-serif;
+}
+
+.burger-menu-panel-wrapper{
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    padding: 14px 20px 10px 20px;
+    height: 64px;
+        border-bottom: 1px solid #FFFFFF14;
+
+}
+@keyframes slideIn {
+    from { right: -350px; opacity: 0; }
+    to { right: 0; opacity: 1; }
+}
+
+.burger-menu-panel .close-btn {
+    background: none;
+    border: none;
+    font-weight: 100;
+    font-size: 40px;
+    color: #fff;
+    cursor: pointer;
+}
+.header-btn{
+ display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 8px;
+}
+.user-info {
+    margin: 30px 0 80px;
+}
+.close-btn{ 
+    margin-right: auto;
+}
+
+.burger-menu-panel .user-info h2 {
+    font-size: 24px;
+    color: #fff;
+    margin: 0 0 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.burger-menu-panel .role {
+    background: var(--lightGreen);
+    color: #222;
+    font-size: 13px;
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-weight: 500;
+}
+
+.burger-menu-panel .user-info p {
+    color: #ccc;
+    font-size: 15px;
+    margin: 0;
+}
+
+.logout-btn {
+    background: #5847F1;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 2px;
+    padding: 12px 0;
+    font-size: 16px;
+    max-width: 400px;
+    width: 100%;
+    margin: auto;
+    cursor: pointer;
+    margin-top: auto;
+    transition: background 0.4s;
+}
+.logout-icon{
+    margin-right: 5px;
+}
+
+.burger-menu-panel .logout-btn:hover {
+    background: #4747a1;
+}
+
+/* ...existing code... */

@@ -7,6 +7,9 @@ import TableView from '../../components/Dashboard/Tableview/Tableview';
 import Loader from '../../components/Loader/Loader';
 import type { ColumnType, CardItem, Status } from '../../types';
 import { useAuth } from '../../hooks/useAuth';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const MainPage: React.FC = () => {
   const { token, userInfo } = useAuth();
@@ -91,37 +94,40 @@ const MainPage: React.FC = () => {
         body: JSON.stringify(body),
       });
 
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        console.error('Error response from server:', errorData);
-        throw new Error(errorData.error || 'Failed to save task');
+        if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    console.error('Error response from server:', errorData);
+    throw new Error(errorData.error || 'Failed to save task');
+  }
+
+  const savedTask: CardItem = await response.json();
+
+  setColumns((prev) =>
+    prev.map((col) => {
+      const colId = col.id.toUpperCase();
+      const taskStatus = savedTask.status?.toUpperCase();
+
+      if (colId === taskStatus) {
+        const exists = col.cards.some((c) => c.id === savedTask.id);
+        return {
+          ...col,
+          cards: exists
+            ? col.cards.map((c) => (c.id === savedTask.id ? savedTask : c))
+            : [...col.cards, savedTask],
+        };
+      } else {
+        return {
+          ...col,
+          cards: col.cards.filter((c) => c.id !== savedTask.id),
+        };
       }
+    })
+  );
+  toast.success(isNew ? 'Card was successfully created' : 'Card was successfully updated');
 
-      const savedTask: CardItem = await response.json();
-
-      setColumns((prev) =>
-        prev.map((col) => {
-          const colId = col.id.toUpperCase();
-          const taskStatus = savedTask.status?.toUpperCase();
-
-          if (colId === taskStatus) {
-            const exists = col.cards.some((c) => c.id === savedTask.id);
-            return {
-              ...col,
-              cards: exists
-                ? col.cards.map((c) => (c.id === savedTask.id ? savedTask : c))
-                : [...col.cards, savedTask],
-            };
-          } else {
-            return {
-              ...col,
-              cards: col.cards.filter((c) => c.id !== savedTask.id),
-            };
-          }
-        })
-      );
     } catch (err) {
       console.error('Error saving task:', err);
+      toast.error('Failed to save task');
     }
   };
 
@@ -140,8 +146,10 @@ const MainPage: React.FC = () => {
           cards: col.cards.filter((c) => c.id !== id),
         }))
       );
+      toast.success('Card was successfully deleted');
     } catch (err) {
       console.error('Error deleting task:', err);
+      toast.error('Failed to delete task');
     }
   };
 

@@ -17,7 +17,7 @@
 .burger-menu-panel-wrapper{
     display: grid;
     grid-template-rows: repeat(3, 1fr);
-    padding: 14px 20px 10px 20px;
+    padding: 10px calc(5.63vw - 1.12px);;
     height: 64px;
         border-bottom: 1px solid #FFFFFF14;
 

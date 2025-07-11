@@ -44,7 +44,7 @@
 
 .tag.low { background-color: #8bc34a; }
 .tag.medium { background-color: #ff9800; }
-.tag.top { background-color: #f44336; }
+.tag.high { background-color: #f44336; }
 
 .status-tag {
   padding: 4px 10px;
@@ -57,7 +57,7 @@
   text-align: center;
 }
 
-.status-tag.to-do { background-color: #2196f3; color: #fff; }
+.status-tag.todo { background-color: #2196f3; color: #fff; }
 .status-tag.in-progress { background-color: #ffeb3b; color: #000; }
 .status-tag.review { background-color: #9c27b0; color: #fff; }
 .status-tag.done { background-color: #4caf50; color: #fff; }
